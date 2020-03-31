@@ -59,9 +59,8 @@ class Country
   def email_subscribers
     @email_subscribers ||= begin
       begin
-        email_lists = GdsApi.email_alert_api.find_subscriber_list("links" => { countries: [content_id] })
-        email_lists
-        #email_lists.dig("subscriber_list", "active_subscriptions_count")
+        email_lists = GdsApi.email_alert_api.find_subscriber_list("countries" => [content_id])
+        email_lists.dig("subscriber_list", "active_subscriptions_count")
       rescue GdsApi::HTTPNotFound
         "0"
       rescue GdsApi::BaseError, SocketError => e
