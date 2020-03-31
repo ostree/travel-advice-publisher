@@ -56,6 +56,21 @@ class Country
     @data_path ||= Rails.root.join("lib/data/countries.yml")
   end
 
+  def email_subscribers
+    @email_subscribers ||= begin
+      begin
+        email_lists = GdsApi.email_alert_api.find_subscriber_list("links" => { countries: [content_id] })
+        email_lists
+        #email_lists.dig("subscriber_list", "active_subscriptions_count")
+      rescue GdsApi::HTTPNotFound
+        "0"
+      rescue GdsApi::BaseError, SocketError => e
+        GovukError.notify(e)
+        "?"
+      end
+    end
+  end
+
   def self.data_path=(path)
     clear_memoized_countries unless path == @data_path
     @data_path = path

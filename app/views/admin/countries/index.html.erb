@@ -7,6 +7,7 @@
     <tr class="table-header">
       <th>Country</th>
       <th>Status</th>
+      <th>Email subscribers</th>
     </tr>
     <!--[if gte IE 8]><!-->
     <tr class="if-no-js-hide table-header-secondary">
@@ -28,6 +29,7 @@
         <% else %>
           <td class="text-error">no advice published</td>
         <% end %>
+        <td><%= country.email_subscribers %></td>
       </tr>
     <% end %>
   </tbody>
